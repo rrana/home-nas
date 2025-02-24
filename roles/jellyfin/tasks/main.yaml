@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Your Name
+  description: "Ansible role to install Jellyfin on Ubuntu 24.04."
+  company: Your Company
+  license: MIT
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - "24.04"
+
+dependencies: []

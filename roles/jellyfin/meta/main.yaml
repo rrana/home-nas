@@ -1,0 +1,52 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
+- name: Install prerequisite packages
+  apt:
+    name: "{{ jellyfin_prerequisites }}"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Ensure keyrings directory exists
+  file:
+    path: /usr/share/keyrings
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Download Jellyfin GPG key and store in keyrings
+  get_url:
+    url: "{{ jellyfin_gpg_url }}"
+    dest: /usr/share/keyrings/jellyfin-archive-keyring.gpg
+    mode: '0644'
+  become: yes
+
+- name: Add Jellyfin repository
+  apt_repository:
+    repo: "{{ jellyfin_repo }}"
+    state: present
+    filename: jellyfin
+  become: yes
+
+- name: Update apt cache after adding Jellyfin repo
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install Jellyfin package
+  apt:
+    name: "{{ jellyfin_package }}"
+    state: latest
+  become: yes
+
+- name: Ensure Jellyfin service is enabled and started
+  service:
+    name: jellyfin
+    state: started
+    enabled: yes
+  become: yes

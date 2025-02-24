@@ -1,0 +1,17 @@
+---
+# Prerequisite packages required for adding HTTPS repositories
+jellyfin_prerequisites:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+
+# URL for the Jellyfin GPG key
+jellyfin_gpg_url: "https://repo.jellyfin.org/debian/jellyfin_team.gpg.key"
+
+# Apt repository for Jellyfin using the key stored in keyrings
+jellyfin_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/jellyfin-archive-keyring.gpg] https://repo.jellyfin.org/ubuntu {{ ansible_distribution_release }} main"
+
+# Jellyfin package name to install
+jellyfin_package: "jellyfin"
